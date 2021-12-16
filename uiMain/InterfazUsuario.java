@@ -244,4 +244,282 @@ try {
 		escena6.narrativa = "Hasta acá la demo.";
 		//escena6.opciones = new Object[] {"Jugar de nuevo", 0, "salir", 0};
 		allEscenas.add(escena6);
+		Escena escena7 = new Escena();
+		escena7.hayCombate = false;
+		escena7.idEscena = 7;
+		escena7.narrativa = "Con mucho orgullo pero poca sabiduría, malogras el hechizo y derribas las piedras que cubren la entrada a la caverna,\n"+
+		"alertando así los guardas, iniciándose un combate feroz bajo la mortecina luz de la luna.";
+		escena7.opciones = new Object[] {"Adentrarse en la caverna", 6, "Es muy peligroso seguir adelante yo solo. Volveré al pueblo y le contaré a los adultos.", 6};
+		allEscenas.add(escena7);
 		
+	}
+
+	public static void narracion() {
+		//System.out.println(gestorAplicacion.mecanicas.Narrador.allEscenas.get(0).);
+		//System.out.println(allEscenas.size());
+
+		System.out.println("\n" +gestorAplicacion.mecanicas.Narrador.getEscena()+"\n");
+		//System.out.println("\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510");
+		//System.out.print("\u250C");
+
+		//Math.max(gestorAplicacion.mecanicas.Narrador.getOpciones()[0].toString().length(),gestorAplicacion.mecanicas.Narrador.getOpciones()[2].toString().length());
+		String str = "\u2500";
+		String marco = str.repeat(5+Math.max(gestorAplicacion.mecanicas.Narrador.getOpciones()[0].toString().length(),gestorAplicacion.mecanicas.Narrador.getOpciones()[2].toString().length()));
+		String str2 = "-";
+		String separador = str2.repeat(5+Math.max(gestorAplicacion.mecanicas.Narrador.getOpciones()[0].toString().length(),gestorAplicacion.mecanicas.Narrador.getOpciones()[2].toString().length()));
+		System.out.println(marco);
+		
+		System.out.println(" 1 - "+gestorAplicacion.mecanicas.Narrador.getOpciones()[0]);
+		System.out.println(separador);
+		System.out.println(" 2 - "+ gestorAplicacion.mecanicas.Narrador.getOpciones()[2]);		
+		System.out.print(marco);		
+		promptPlayer();
+
+		
+	}
+	
+	public static void promptPlayer() {
+		
+		Scanner scanner = new Scanner(System.in);		
+		System.out.print("\n\nElige una opción: ");
+		String seleccion = scanner.nextLine();
+		System.out.print("\n");
+		
+		gestorAplicacion.mecanicas.Narrador.setEscena(seleccion);
+		scanner.close();
+	}
+	
+	public static void opcionInvalida() {
+		System.err.println("\uD83D\uDFE6 Elige una opción válida.");
+	}
+	
+	public static void comandoHelp() {
+		System.out.println("\nCOMANDOS\n\n"+
+				"help --- Mostrar los comandos disponibles\n"+
+				"save --- Guardar la partida en el estado actual\n"+
+				"exit --- Salir del juego\n"+
+				"hoja --- Muestra la hoja de personaje\n"+
+				"inv  --- Muestra los objetos del personaje en inventario\n"+
+				"tienda --- Muestra los objetos disponibles para comprar\n" + 
+				"\nCOMANDOS EN COMBATE\n\n"+
+				"atacar  --- Atacar con el arma equipada\n"+
+				"pocion  --- Usar poción de curación\n"+
+				"escapar --- Intentar escapar del combate actual, 30% de probabilidad"
+			);
+	}
+
+	public static void hojaPJ(){
+		//gestorAplicacion.pjs.Player.player.arquetipo();
+		int nextLvlxp = gestorAplicacion.pjs.Player.player.nivel + gestorAplicacion.pjs.Player.player.nivel * 1000;		
+		System.out.println("Nombre del personaje: " + gestorAplicacion.pjs.Player.player.nombre +"\n"+
+                "Clase: " + gestorAplicacion.pjs.Player.player.getClase() + "\n"+
+		"HP: " + gestorAplicacion.pjs.Player.player.HP+" ("+gestorAplicacion.pjs.Player.player.aHP+")\n"+
+		"Nivel: " + gestorAplicacion.pjs.Player.player.nivel+"\n"+
+		"Experiencia: " + gestorAplicacion.pjs.Player.player.xp+"/"+nextLvlxp+"\n"+
+		"FUE: " + gestorAplicacion.pjs.Player.player.FUE+"\n"+		
+		"DES: " + gestorAplicacion.pjs.Player.player.DES+"\n"+
+		"CON: " + gestorAplicacion.pjs.Player.player.CON+"\n"+
+		"INT: " + gestorAplicacion.pjs.Player.player.INT+"\n"+
+		"SAB: " + gestorAplicacion.pjs.Player.player.SAB+"\n"+
+		"CAR: " + gestorAplicacion.pjs.Player.player.CAR+"\n"+
+		"Arma equipada: " + Player.arma.nombre+" (+"+Arma.dano+")\n"+
+		"Escudo equipado: " + Player.armadura.nombre+" (+"+Armadura.getDefensa()+")\n"+
+		"Descripción: " + gestorAplicacion.pjs.Player.player.descripcion+"\n"+
+		"Wallet: "+ gestorAplicacion.pjs.Player.player.wallet+"\n"
+		
+		);
+	}
+	
+	public static void comandoExit() {
+		System.out.println("¡Hasta pronto!");
+	}
+
+	public static void enterCombate(String enemigo){
+		System.out.println("¡¡¡Un " + enemigo + " salvaje apareció!!! \uD83D\uDE08 \n");
+	}
+
+	public static void turnoCombate(){		
+		System.out.print("\n¿Qué deseas hacer?: ");
+	}
+
+	public static void comandoAttack(){
+		System.out.println("Has atacado \u2694");
+	}
+
+	public static void comandoPotion(){
+		if (Inventario.listaPociones.size() > 0) {
+			gestorAplicacion.pjs.Player.player.HP += Inventario.listaPociones.get(0).curacion;
+			System.out.println("Te has tomado una poción");
+			Inventario.listaPociones.remove(0);
+			if (gestorAplicacion.pjs.Player.player.HP >= gestorAplicacion.pjs.Player.player.aHP) {
+				gestorAplicacion.pjs.Player.player.HP = gestorAplicacion.pjs.Player.player.aHP;
+				System.out.println("Tu vida se ha restablecido al maximo!");
+			}
+		}
+		else {
+			System.out.println("No tienes pociones disponibles");
+		}
+		
+	}
+	
+	public static void comandoEscape(){
+		System.out.println("Tratas de escapar y...");
+	}
+
+	public static void comandoEquivocado(){
+		System.err.println("Comando equivocado");
+	}
+
+	public static void ataqueExitoso(int dano, int fue){ //agreque el parametro fuerza para el calculo de daño en combate
+		System.out.println("Haces " + (dano + fue) + " de daño al enemigo. \u2764");
+	}
+        
+        public static void golpeCritico(int dano){
+		System.out.println("¡¡Golpe critico!! !!" + dano + " de daño al enemigo!!. \u2764");
+	}
+        
+	public static void ataqueFallido(String atacante){
+		System.out.println(atacante + " falló su ataque. \uD83D\uDE02");
+	}
+	
+	public static void escapeExitoso(){
+		System.out.println("Logras escapar de la batalla \uD83D\uDE06");
+	}
+	
+        public static void ataqueBloqueado(){
+		System.out.println("Logras bloquear el ataque enemigo. \uD83D\uDE06");
+	}
+        
+	public static void escapeFallido(){
+		System.out.println("Fallas en tu intento de huir ...miserablemente. \uD83D\uDE0C");
+	}
+
+	public static void ataqueRivalExito(int dano, String nombre){
+		System.err.println("El " + nombre + " enemigo atacó. \uD83D\uDDE1 \nEl " + nombre + " te hizo "  + dano +  " de daño\nAhora tienes "+ gestorAplicacion.pjs.Player.player.HP + " de vida.");
+	}
+
+	public static void victoria(String derrotado, int exp, int oro){
+		System.out.println("Has derrotado a " + derrotado + " y has obtenido " + exp*200 + " de experiencia y "+ oro +" monedas de oro. \uD83D\uDE03 ");
+	}
+
+	public static void derrota(String victorioso){
+		System.err.println("Has sido derrotado por " + victorioso + " \uD83D\uDE22 \uD83D\uDE22 \uD83D\uDE22 \n\n");
+	}
+
+	public static void escenaFinal(){		
+		
+		System.out.println("Proyecto de Programación orientada a objetos\nUniversidad Nacional - Sede Medellín\n\nIntegrantes\n\nSantiago Rivera\nBrayan Caballero\nEider Pena\nJohn Mesa\n\n2021");
+		
+	}
+
+	public static void juegoGuardado(){
+		System.out.println("¡Juego guardado con éxito!");
+	}
+
+	public static void curacion(int heal){
+		System.out.println("te has curado " + heal);
+	}
+	public static void abrirInventario() {
+		int cont = 1;
+		if (Player.clase == Clase.GUERRERO) {
+			if (Inventario.listaArmasGuerrero.size() > 0) {
+			System.out.println("------- ARMAS --------");
+			for (Arma cadaArma:Inventario.listaArmasGuerrero) {
+				System.out.println(cont + ")" + cadaArma.nombre + ": " + cadaArma.descripcion);
+				cont++;
+				}
+			}	
+		}if (Player.clase == Clase.ARQUERO) {
+			if (Inventario.listaArmasArquero.size() > 0) {
+			System.out.println("------- ARMAS --------");
+			for (Arma cadaArma:Inventario.listaArmasArquero) {
+				System.out.println(cont + ")" + cadaArma.nombre + ": " + cadaArma.descripcion);
+				cont++;
+				}
+			}	
+		}if (Player.clase == Clase.MAGO) {
+			if (Inventario.listaArmasMago.size() > 0) {
+			System.out.println("------- ARMAS --------");
+			for (Arma cadaArma:Inventario.listaArmasMago) {
+				System.out.println(cont + ")" + cadaArma.nombre + ": " + cadaArma.descripcion);
+				cont++;
+				}
+			}	
+		}if (Inventario.listaArmaduras.size() > 0) {
+			cont = 1;
+			System.out.println("------- ARMADURAS --------");
+		    for (Armadura cadaArmadura:Inventario.listaArmaduras) {
+		    	System.out.println(cont + ")" + cadaArmadura.nombre + ": " + cadaArmadura.descripcion);
+		    	cont++;
+		    }
+		}if (Inventario.listaPociones.size() > 0) {
+			cont = 1;
+			System.out.println("------- POCIONES --------");
+		    for (Pocion cadaPocion:Inventario.listaPociones) {
+		        System.out.println(cont + ")" + cadaPocion.nombre + ": " + cadaPocion.descripcion);
+		        cont++;
+		    }
+		}	
+	}
+	public static void irATienda() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Escriba el numero del tipo de articulo que desea comprar:\n" + "1) Armas\n" + "2) Armaduras\n" + "3) Pociones");
+	
+		char tipo = input.next().charAt(0);
+		int cont  = 1;
+		Tienda.listaArmasGuerreroTienda.clear();
+		Tienda.listaArmadurasTienda.clear();
+		Tienda.listaPocionesTienda.clear();
+		Tienda.AñadirGuerrero ();
+		Tienda.AñadirArmaduras();
+		Tienda.AñadirPociones ();
+
+			if ((tipo == '1') && (Player.clase == Clase.GUERRERO)) {
+				System.out.println("Ingrese el numero del arma que desea comprar:");
+				for (Arma listarArmaGuerrero:Tienda.listaArmasGuerreroTienda) {
+					System.out.println(cont + ")" + listarArmaGuerrero.nombre + ": " + listarArmaGuerrero.descripcion);
+					cont++;
+				}char choice = input.next().charAt(0);	
+				Tienda.ComprarArmaGuerrero(choice, Player.player.wallet);
+			}
+			
+			if ((tipo == '1') && (Player.clase == Clase.ARQUERO)) {
+				System.out.println("Ingrese el numero del arma que desea comprar:");
+				for (Arma listarArmaArquero:Tienda.listaArmasArqueroTienda) {
+					System.out.println(cont + ")" + listarArmaArquero.nombre + ": " + listarArmaArquero.descripcion);
+					cont++;
+				}char choice = input.next().charAt(0);	
+				Tienda.ComprarArmaGuerrero(choice, Player.player.wallet);
+			}
+			
+			if ((tipo == '1') && (Player.clase == Clase.MAGO)) {
+				System.out.println("Ingrese el numero del arma que desea comprar:");
+				for (Arma listarArmaMago:Tienda.listaArmasMagoTienda) {
+					System.out.println(cont + ")" + listarArmaMago.nombre + ": " + listarArmaMago.descripcion);
+					cont++;
+				}char choice = input.next().charAt(0);	
+				Tienda.ComprarArmaGuerrero(choice, Player.player.wallet);
+			}
+			
+			else if (tipo == '2') {
+				System.out.println("Ingrese el numero del armadura que desea comprar:");
+				for (Armadura listarArmaduras:Tienda.listaArmadurasTienda) {
+					System.out.println(cont + ")" + listarArmaduras.nombre + ": " + listarArmaduras.descripcion);
+					cont++;
+			   }char choice = input.next().charAt(0);	
+				Tienda.ComprarArmadura(choice, Player.player.wallet);
+			}
+			
+			else if (tipo == '3') {
+				System.out.println("Ingrese el numero de la pocion que desea comprar:");
+				for (Pocion listarPociones:Tienda.listaPocionesTienda) {
+					System.out.println(cont + ")" + listarPociones.nombre + ": " + listarPociones.descripcion);
+					cont++;
+			   }char choice = input.next().charAt(0);	
+				Tienda.ComprarPocion(choice, Player.player.wallet);
+			}
+			else {
+				System.out.println("Opcion invalida");
+			}
+	}
+}
