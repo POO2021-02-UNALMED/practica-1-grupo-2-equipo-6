@@ -100,7 +100,8 @@ public class InterfazUsuario {
                     System.out.println("                                                   2 - Partida rapida");
                     System.out.println("                                                   3 - Atras");
                     System.out.print(">> ");	
-try {
+				
+                    try {
                         switch(teclado.nextInt()){
                             case 1:  uiMain.InterfazUsuario.crearJugador();salirMenu=true;break;
                             case 2:  gestorAplicacion.mecanicas.Narrador.iniciarNuevo();salirMenu=true;break; 
@@ -151,7 +152,10 @@ try {
                 Thread.sleep(5*1000);
                 } catch(Exception e){
                     
-                }break;
+                }
+                gestorAplicacion.mecanicas.Narrador.iniciarNuevo();
+                
+                break;
                 
                 case 3: gestorAplicacion.pjs.Player.player = new Player(nombre, edad);
                     System.out.println("Bienvenido " + nombre);
@@ -244,6 +248,7 @@ try {
 		escena6.narrativa = "Hasta acá la demo.";
 		//escena6.opciones = new Object[] {"Jugar de nuevo", 0, "salir", 0};
 		allEscenas.add(escena6);
+		
 		Escena escena7 = new Escena();
 		escena7.hayCombate = false;
 		escena7.idEscena = 7;
@@ -468,11 +473,16 @@ try {
 		char tipo = input.next().charAt(0);
 		int cont  = 1;
 		Tienda.listaArmasGuerreroTienda.clear();
+		Tienda.listaArmasArqueroTienda.clear();
+		Tienda.listaArmasMagoTienda.clear();
 		Tienda.listaArmadurasTienda.clear();
 		Tienda.listaPocionesTienda.clear();
 		Tienda.AñadirGuerrero ();
+		Tienda.AñadirArquero();
+		Tienda.AñadirMago();
 		Tienda.AñadirArmaduras();
 		Tienda.AñadirPociones ();
+		
 
 			if ((tipo == '1') && (Player.clase == Clase.GUERRERO)) {
 				System.out.println("Ingrese el numero del arma que desea comprar:");
@@ -489,16 +499,16 @@ try {
 					System.out.println(cont + ")" + listarArmaArquero.nombre + ": " + listarArmaArquero.descripcion);
 					cont++;
 				}char choice = input.next().charAt(0);	
-				Tienda.ComprarArmaGuerrero(choice, Player.player.wallet);
+				Tienda.ComprarArmaArquero(choice, Player.player.wallet);
 			}
 			
-			if ((tipo == '1') && (Player.clase == Clase.MAGO)) {
+			if ((tipo == '1') && (Player.clase == gestorAplicacion.pjs.Clase.MAGO)) {
 				System.out.println("Ingrese el numero del arma que desea comprar:");
 				for (Arma listarArmaMago:Tienda.listaArmasMagoTienda) {
 					System.out.println(cont + ")" + listarArmaMago.nombre + ": " + listarArmaMago.descripcion);
 					cont++;
 				}char choice = input.next().charAt(0);	
-				Tienda.ComprarArmaGuerrero(choice, Player.player.wallet);
+				Tienda.ComprarArmaMago(choice, Player.player.wallet);
 			}
 			
 			else if (tipo == '2') {
