@@ -100,3 +100,55 @@ public class InterfazUsuario {
                     System.out.println("                                                   2 - Partida rapida");
                     System.out.println("                                                   3 - Atras");
                     System.out.print(">> ");	
+try {
+                        switch(teclado.nextInt()){
+                            case 1:  uiMain.InterfazUsuario.crearJugador();salirMenu=true;break;
+                            case 2:  gestorAplicacion.mecanicas.Narrador.iniciarNuevo();salirMenu=true;break; 
+                            case 3:  uiMain.InterfazUsuario.inicio(); salirMenu=true;break;
+                        }
+                    }catch(InputMismatchException e){
+			System.err.println("\uD83D\uDFE6 Elige una opción válida");
+			teclado.next();
+                    }
+                }
+                while (!salirMenu);
+        }
+        
+        public static void crearJugador(){
+            Scanner dato = new Scanner(System.in);
+            System.out.println("          Nombre del personaje: ");
+            System.out.print(">> ");	
+            String nombre = dato.next();
+            System.out.println("          Edad del personaje: ");
+            System.out.print(">> ");	
+            int edad = dato.nextInt();
+            System.out.println("          Elige tu clase: ");            
+            System.out.println("          1 - Guerrero");
+            System.out.println("          2 - Arquero");
+            System.out.println("          3 - Mago");
+            System.out.print(">> ");	
+            int clase = dato.nextInt();
+            
+            switch(clase){
+                case 1: gestorAplicacion.pjs.Player.player = new Player(nombre, edad);
+                    System.out.println("Bienvenido " + nombre);
+					Player.clase = gestorAplicacion.pjs.Clase.GUERRERO;
+                uiMain.InterfazUsuario.hojaPJ();
+                try{
+                Thread.sleep(5*1000);
+                } catch(Exception e){
+                    
+                }
+                gestorAplicacion.mecanicas.Narrador.iniciarNuevo();
+                
+                break;
+                
+                case 2: gestorAplicacion.pjs.Player.player = new Player(nombre, edad);
+                    System.out.println("Bienvenido " + nombre);
+					Player.clase = gestorAplicacion.pjs.Clase.ARQUERO;
+                uiMain.InterfazUsuario.hojaPJ();    
+                try{
+                Thread.sleep(5*1000);
+                } catch(Exception e){
+                    
+                }
